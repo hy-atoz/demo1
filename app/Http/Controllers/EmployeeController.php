@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\employee;
+use Illuminate\Http\Request;
+
 class EmployeeController extends Controller
 {
     /**
@@ -14,8 +15,8 @@ class EmployeeController extends Controller
     public function index()
     {
         $user = employee::latest()->paginate(5);
-      
-        return view('index2.index2',compact('user'))
+
+        return view('index2.index2', compact('user'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -39,24 +40,24 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email'=>'required',
-            'password' =>'required|min:8|confirmed',
-            'userGroup'=>'required',
-           
+            'email' => 'required',
+            'password' => 'required|min:8|confirmed',
+            'userGroup' => 'required',
+
         ]);
 
-        if($request ->hasFile('user-image')){
-            $image=$request->file('user-image');
-            $image->move('images',$image->getClientOriginalName());
-            $imageName=$image->getClientOriginalName();
-            $request['image']=$imageName;
+        if ($request->hasFile('user-image')) {
+            $image = $request->file('user-image');
+            $image->move('images', $image->getClientOriginalName());
+            $imageName = $image->getClientOriginalName();
+            $request['image'] = $imageName;
             $request['password'] = bcrypt($request->password);
         }
-      
+
         employee::create($request->all());
-       
+
         return redirect()->route('index2.index')
-                        ->with('success','Product created successfully.');
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -67,7 +68,7 @@ class EmployeeController extends Controller
      */
     public function show(employee $user)
     {
-        return view('index2.show',compact('user'));
+        return view('index2.show', compact('user'));
     }
 
     /**
@@ -78,7 +79,7 @@ class EmployeeController extends Controller
      */
     public function edit(employee $user)
     {
-        return view('index2.edit',compact('user'));
+        return view('index2.edit', compact('user'));
     }
 
     /**
@@ -92,13 +93,13 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'name' => 'required',
-           
+
         ]);
-      
+
         $user->update($request->all());
-      
+
         return redirect()->route('employee.index')
-                        ->with('success','Employee updated successfully');
+            ->with('success', 'Employee updated successfully');
     }
 
     /**
@@ -110,8 +111,8 @@ class EmployeeController extends Controller
     public function destroy(employee $user)
     {
         $user->delete();
-       
+
         return redirect()->view('index2.index2')
-                        ->with('success','Employee deleted successfully');
+            ->with('success', 'Employee deleted successfully');
     }
 }

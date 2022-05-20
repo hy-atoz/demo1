@@ -19,14 +19,14 @@ class employee extends Model
 
     protected $hidden = [
         'password',
-        
+
     ];
-    
-    public static $rules=[
-        'name' =>'required|string|max:100',
-        'email'=>'required|string|max:100',
-        'password'=>'required|string|max:100',
-        'userGroup'=>'nullable|string|max:100',
-        'image'=>'nullable|string|max:100',
+
+    public static $rules = [
+        'name' => 'required|string|max:100',
+        'email' => 'required|string|max:100',
+        'password' => 'required|string|max:100',
+        'userGroup' => 'nullable|string|max:100',
+        'image' => 'nullable|string|max:100',
     ];
 }
